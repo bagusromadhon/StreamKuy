@@ -1,6 +1,19 @@
 import { forwardRef, useEffect, useRef } from 'react';
-
-export default forwardRef(function TextInput({ type = 'text', className = '', isFocused = false, ...props }, ref) {
+import '../../css/input.css';
+export default forwardRef(function TextInput({
+    type = 'text',
+    className = '',
+    name,
+    value,
+    isFocused = false,
+    defaultValue,
+    variant = "primary",
+    placeholder,
+    isError,
+    autoComplete,
+    required,
+    onChange,
+    ...props }, ref) {
     const input = ref ? ref : useRef();
 
     useEffect(() => {
@@ -10,14 +23,18 @@ export default forwardRef(function TextInput({ type = 'text', className = '', is
     }, []);
 
     return (
-        <input
-            {...props}
-            type={type}
-            className={
-                'border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm ' +
-                className
-            }
-            ref={input}
-        />
+        <div className="flex flex-col items-start">
+            <input
+                type={type}
+                name={name}
+                value={value}
+                className={`rounded-2xl bg-form-bg py-[13px] px-7 w-full input-${variant} ${className}`}
+                ref={input}
+                autoComplete={autoComplete}
+                required={required}
+                onChange={onChange} // Menggunakan onChange langsung sebagai properti
+                placeholder={placeholder}
+            />
+        </div>
     );
 });
